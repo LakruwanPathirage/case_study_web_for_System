@@ -18,7 +18,7 @@ class PrTableRow extends Component {
           <button
             type="button"
             className="btn btn-success mx-1"
-            onClick={this.props.Ammendbttonpress}
+            onClick={() => this.props.Ammendbttonpress(this.props.obj.doocid)}
           >
             Ammend
           </button>

@@ -7,26 +7,27 @@ export default class PrManagementAndQuatations extends Component {
     number: 1,
   };
 
-  prTbleRRow = () => {
-    return this.state.requisitions.map(function (object, i) {
-      return (
-        <PrTableRow
-          obj={object}
-          key={i}
-          Ammendbttonpress={function () {
-            db.collection("requisitions")
-              .doc(object.doocid)
-              .update({
-                status: "Rejected",
-              })
-              .then(function () {
-                console.log("Document successfully updated!");
-              });
+  Ammendbttonpress = dddid => {
+    let loddfun = this.Loaddata;
+    db.collection("requisitions")
+      .doc(dddid)
+      .update({
+        status: "Rejected",
+      })
+      .then(function () {
+        loddfun();
+        console.log("---------------------------------");
+        console.log("Document successfully updated!");
+        console.log("---------------------------------");
+      });
 
-            //this.Loaddata();
-          }}
-        />
-      );
+    console.log("ammend btn pressed haaaaai");
+  };
+
+  prTbleRRow = () => {
+    let ammbfun = this.Ammendbttonpress;
+    return this.state.requisitions.map(function (object, i) {
+      return <PrTableRow obj={object} key={i} Ammendbttonpress={ammbfun} />;
     });
   };
   Loaddata = () => {
