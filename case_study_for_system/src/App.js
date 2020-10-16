@@ -5,6 +5,8 @@ import Header from "./componets/header";
 import EditPrManagement from "./componets/editprmangement";
 import PrManagementAndQuatations from "./componets/prmanagement";
 import SupplierAndQuatations from "./componets/suppliersandquatations";
+import Home from "./componets/Home"
+
 import "./css/custom.css";
 class App extends Component {
   render() {
@@ -47,6 +49,12 @@ class App extends Component {
             </div>
           </nav>
           <Switch>
+          <Route
+              exact
+              path="/"
+              component={Home}
+            />
+
             <Route
               exact
               path="/createPrManagementAndQuatations"
