@@ -30,3 +30,17 @@ bg-custom-cl {
   color: #c0c0c0;
   background-color: #ffffff;
 }
+.cusarrow:hover {
+  background: green;
+  padding: 8px;
+  border-radius: 2px;
+}
+.custtm-supplierlist {
+  line-height: 0.4rem;
+}
+.custtm-supplierlist p {
+  line-height: 0.4rem;
+}
+.custombbtn {
+  margin-top: -30px;
+}
