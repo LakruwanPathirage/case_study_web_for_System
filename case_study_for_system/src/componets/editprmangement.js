@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { db, auth } from "../services/firebase";
+
+var ids = require("short-id");
 export default class EditPrManagement extends Component {
   state = {
     suppliers: [],
@@ -14,6 +16,7 @@ export default class EditPrManagement extends Component {
   };
 
   componentDidMount() {
+    // console.log("heyyyyyyy--------    " + ids.generate());
     var reqno = this.props.match.params.id;
 
     db.collection("requisitions")
@@ -53,6 +56,7 @@ export default class EditPrManagement extends Component {
           console.log(doc.id, " => ", doc);
 
           const data = doc.data();
+
           suppliers.push(data);
         });
 
@@ -60,7 +64,7 @@ export default class EditPrManagement extends Component {
           suppliers: suppliers,
           suppliername: suppliers[1].supname,
         });
-        console.log(suppliers);
+        console.log("I am all suppliers" + suppliers);
       })
       .catch(error => console.log(error));
 
@@ -128,6 +132,13 @@ export default class EditPrManagement extends Component {
 
   //send button clicked
   sendbutton = suppliernnme => {
+    let selectedsup = this.state.selectedsuppliers;
+    let rrnumber = this.state.requisitionId; //get requestion id
+    let allsupliers = this.state.suppliers;
+    let prodgenaratedid = ids.generate();
+    let accessprops = this.props;
+    let nowproducts = this.state.pagereqruision.products;
+    // let foundsupll = {};
     console.log("send btn clicked");
     db.collection("requisitions")
       .doc(this.state.documntId)
@@ -136,6 +147,68 @@ export default class EditPrManagement extends Component {
       })
       .then(function () {
         console.log("Document successfully updated!");
+
+        let supplierstocalled =
+          Math.floor(Math.random() * selectedsup.length) + 1;
+
+        console.log(supplierstocalled);
+        accessprops.history.push("/createPrManagementAndQuatations");
+        let places = [
+          "Malabe",
+          "Kolonnawa",
+          "Kandy",
+          "Jayawardenapura",
+          "kottawa",
+          "Gampaha",
+          "colombo",
+          "Kiribathgoda",
+          "kotte",
+          "Borella",
+          "Jaffna",
+          "Kurunagala",
+          "Homagama",
+          "Moratuwa",
+        ];
+        let dti = ["Yes", "No"];
+        let nproducts = [];
+
+        for (var i = 0; i < supplierstocalled; i++) {
+          // console.log(
+          //   "hey iam email" +
+          //     allsupliers.filter(single => single.supname == selectedsup[i])
+          // );
+
+          // foundsupll = allsupliers.find(
+          //   item => item.supname === selectedsup[i]
+          // ); //get supplier object from the full supplier arry
+
+          for (var x = 0; x < nowproducts.length; x++) {
+            nproducts.push({
+              details: dti[Math.floor(Math.random() * 2)],
+              requisition: {
+                reqNo: rrnumber,
+                location: places[Math.floor(Math.random() * 14)],
+              },
+              product: {
+                code: prodgenaratedid,
+                desc: nowproducts[i].desc,
+                discount: "0",
+                qty: nowproducts[i].qty,
+                price: Math.floor(Math.random() * 18000) + 1,
+              },
+              supplier: {
+                email: "",
+                phoneNo: "",
+                supplierName: selectedsup[i].toString(),
+                supplierTerm: "general",
+              },
+            });
+          }
+        }
+        console.log("these are the produts " + nproducts);
+        for (var k = 0; k < nproducts.length; k++) {
+          db.collection("supplierQuotation").add(nproducts[k]);
+        }
       });
   };
 
@@ -153,7 +226,7 @@ export default class EditPrManagement extends Component {
                   <div class="col-sm-5">
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control bg-secondary"
                       id="prescridd"
                       value={this.state.requisitionId}
                       readonly
@@ -167,7 +240,7 @@ export default class EditPrManagement extends Component {
                   <div class="col-sm-5">
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control bg-secondary"
                       id="name"
                       value={this.state.mangername}
                       readonly
@@ -179,10 +252,10 @@ export default class EditPrManagement extends Component {
                   <label for="manager" class="col-sm-5 col-form-label">
                     Manager
                   </label>
-                  <div class="col-sm-5">
+                  <div className="col-sm-5">
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control bg-secondary"
                       id="manager"
                       value={this.state.mangername}
                       readonly
@@ -190,14 +263,14 @@ export default class EditPrManagement extends Component {
                   </div>
                 </div>
 
-                <div class="form-group row">
+                <div className="form-group row">
                   <label for="site" class="col-sm-5 col-form-label">
                     Site
                   </label>
-                  <div class="col-sm-5">
+                  <div className="col-sm-5">
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control bg-secondary"
                       id="site"
                       value={this.state.sitename}
                       readonly
@@ -205,14 +278,14 @@ export default class EditPrManagement extends Component {
                   </div>
                 </div>
 
-                <div class="form-group row">
+                <div className="form-group row">
                   <label for="site" class="col-sm-5 col-form-label">
                     Amount
                   </label>
                   <div class="col-sm-5">
                     <input
                       type="amount"
-                      class="form-control"
+                      className="form-control bg-secondary"
                       id="amount"
                       value={this.state.amount}
                       readonly
@@ -281,7 +354,7 @@ export default class EditPrManagement extends Component {
                         })
                       ) : (
                         <li className="list-group-item my-2 custtm-supplierlist list-group-item-warning">
-                          No Any suppliers selected
+                          No suppliers
                         </li>
                       )}
                     </ul>
