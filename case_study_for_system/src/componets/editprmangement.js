@@ -152,7 +152,7 @@ export default class EditPrManagement extends Component {
           Math.floor(Math.random() * selectedsup.length) + 1;
 
         console.log(supplierstocalled);
-        accessprops.history.push("/createPrManagementAndQuatations");
+
         let places = [
           "Malabe",
           "Kolonnawa",
@@ -172,17 +172,15 @@ export default class EditPrManagement extends Component {
         let dti = ["Yes", "No"];
         let nproducts = [];
 
+        let suppliProdct = [];
         for (var i = 0; i < supplierstocalled; i++) {
-          // console.log(
-          //   "hey iam email" +
-          //     allsupliers.filter(single => single.supname == selectedsup[i])
-          // );
-
-          // foundsupll = allsupliers.find(
-          //   item => item.supname === selectedsup[i]
-          // ); //get supplier object from the full supplier arry
+          let myprodts = [];
+          let supliname = selectedsup[i].toString();
 
           for (var x = 0; x < nowproducts.length; x++) {
+            let prdtName = nowproducts[x].desc;
+            let prtPrice = Math.floor(Math.random() * 18000) + 1;
+            let prtQuantity = nowproducts[x].qty;
             nproducts.push({
               details: dti[Math.floor(Math.random() * 2)],
               requisition: {
@@ -191,24 +189,73 @@ export default class EditPrManagement extends Component {
               },
               product: {
                 code: prodgenaratedid,
-                desc: nowproducts[i].desc,
+                desc: prdtName,
                 discount: "0",
-                qty: nowproducts[i].qty,
-                price: Math.floor(Math.random() * 18000) + 1,
+                qty: prtQuantity,
+                price: prtPrice,
               },
               supplier: {
-                email: "",
-                phoneNo: "",
-                supplierName: selectedsup[i].toString(),
+                email: "dghh@gmail.com",
+                phoneNo: "07445555",
+                supplierName: supliname,
                 supplierTerm: "general",
               },
             });
+            console.log(
+              "selectinh product are  productname " +
+                prdtName +
+                " prodct price " +
+                prtPrice.toString() +
+                " price is " +
+                prtQuantity.toString()
+            );
+            myprodts.push({
+              itemname: prdtName,
+              price: prtPrice.toString(),
+              quantity: prtQuantity.toString(),
+            });
           }
+          suppliProdct.push({ supplierName: supliname, products: myprodts });
         }
-        console.log("these are the produts " + nproducts);
-        for (var k = 0; k < nproducts.length; k++) {
-          db.collection("supplierQuotation").add(nproducts[k]);
+        // console.log(
+        //   "these are the produts " +
+        //     suppliProdct[0].supplierName +
+        //     " and " +
+        //     suppliProdct[0].products[0].itemname
+        // );
+        // console.log(suppliProdct[0].products);
+
+        // for (var h = 0; h < suppliProdct.length; h++) {
+        //   db.collection("suporderrss")
+        //     .doc(rrnumber)
+        //     .collection("suppliers")
+        //     .doc(suppliProdct[h].supplierName)
+        //     .set({
+        //       products: suppliProdct[h].products,
+        //     });
+        //}
+
+        for (var h = 0; h < suppliProdct.length; h++) {
+          var yy = rrnumber;
+          var suppname = suppliProdct[h].supplierName;
+          console.log("req num is" + yy);
+          console.log("supplier name is" + suppliProdct[h].supplierName);
+          // console.log("products" + suppliProdct[h].products);
+          db.collection("suporderrss").doc(yy).set({ name: "fbghh" });
+
+          db.collection("suporderrss")
+            .doc(yy)
+            .collection("suppliers")
+            .doc(suppliProdct[h].supplierName)
+            .set({
+              dummy: "dummy",
+              products: [{ itemname: "vfbb", price: "555", quantity: "5555" }],
+            });
         }
+        // for (var k = 0; k < nproducts.length; k++) {
+        //   db.collection("supplierQuotation").add(nproducts[k]);
+        // }
+        //   accessprops.history.push("/createPrManagementAndQuatations");
       });
   };
 

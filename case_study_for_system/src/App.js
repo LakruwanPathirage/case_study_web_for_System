@@ -6,7 +6,7 @@ import EditPrManagement from "./componets/editprmangement";
 import PrManagementAndQuatations from "./componets/prmanagement";
 import SupplierAndQuatations from "./componets/suppliersandquatations";
 import Home from "./componets/Home";
-
+import EditsupplierQuatations from "./componets/editsupplierquatations";
 import "./css/custom.css";
 class App extends Component {
   render() {
@@ -67,6 +67,12 @@ class App extends Component {
               exact
               path="/supplierandquatations"
               component={SupplierAndQuatations}
+            />
+
+            <Route
+              exact
+              path="/editquations/:id"
+              component={EditsupplierQuatations}
             />
           </Switch>
         </div>
