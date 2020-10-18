@@ -18,7 +18,7 @@ export default class SupplierAndQuatations extends Component {
 
           orderrequisitions.push(doc);
         });
-        // console.log("I am here " + requisitions[1].doocid);
+
         this.setState({ orderedrequisitions: orderrequisitions });
         console.log(orderrequisitions);
       })

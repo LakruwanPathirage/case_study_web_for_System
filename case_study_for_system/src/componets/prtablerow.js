@@ -16,6 +16,7 @@ class PrTableRow extends Component {
         <td>
           {this.state.accountBalance > this.props.obj.total ? "Yes" : "No"}
           <button
+            id="ammndbtonn"
             type="button"
             className="btn btn-success mx-1"
             onClick={() => this.props.Ammendbttonpress(this.props.obj.doocid)}
@@ -25,7 +26,11 @@ class PrTableRow extends Component {
         </td>
         <td>
           <Link to={"/editPrManagementAndQuatation/" + this.props.obj.reqNo}>
-            <i class="fa fa-arrow-right cusarrow" aria-hidden="true"></i>
+            <i
+              id="aroow"
+              class="fa fa-arrow-right cusarrow"
+              aria-hidden="true"
+            ></i>
           </Link>
         </td>
       </tr>

@@ -11,7 +11,7 @@ class SupplierTableRow extends Component {
   hello = () => {
     var jj = this.props.obj;
     let ddodc = "";
-    console.log("------------------------------------------------ " + jj.id);
+
     db.collection("suporderrss")
       .doc(jj.id)
       .collection("suppliers")
@@ -19,8 +19,6 @@ class SupplierTableRow extends Component {
       .then(snapshot => {
         const orderr = [];
         snapshot.forEach(doc => {
-          // console.log(doc.id, " " + jj.id + " => ", doc.data());
-
           ddodc = doc.id;
 
           const data = doc.data();
@@ -28,7 +26,7 @@ class SupplierTableRow extends Component {
           data.reqidd = jj.id;
           orderr.push(data);
         });
-        //console.log("I am here " + orderr);
+
         this.setState({ supllierwiseproducts: orderr }, function () {
           console.log(this.state.supllierwiseproducts);
         });

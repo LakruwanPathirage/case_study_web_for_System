@@ -16,15 +16,12 @@ export default class EditPrManagement extends Component {
   };
 
   componentDidMount() {
-    // console.log("heyyyyyyy--------    " + ids.generate());
     var reqno = this.props.match.params.id;
 
     db.collection("requisitions")
       .where("reqNo", "==", reqno)
       .get()
       .then(snapshot => {
-        // const requisitionsss = [];
-
         snapshot.forEach(docc => {
           console.log(docc.id, " => ", docc.data());
 
@@ -41,9 +38,6 @@ export default class EditPrManagement extends Component {
             }
           );
         });
-
-        // this.setState({ requisitions: requisitions });
-        // console.log("this is " + requisitionsss[0]);
       })
       .catch(error => console.log(error));
 
@@ -57,7 +51,7 @@ export default class EditPrManagement extends Component {
 
           const data = doc.data();
 
-          suppliers.push(data);
+          suppliers.push(data); //set data to array
         });
 
         this.setState({
@@ -67,10 +61,6 @@ export default class EditPrManagement extends Component {
         console.log("I am all suppliers" + suppliers);
       })
       .catch(error => console.log(error));
-
-    // this.setState({ suppliername: e.target.value }, function () {
-    //   console.log(this.state.suppliername);
-    // });
   }
 
   supplierCategoryChangedhandler = e => {
@@ -138,8 +128,8 @@ export default class EditPrManagement extends Component {
     let prodgenaratedid = ids.generate();
     let accessprops = this.props;
     let nowproducts = this.state.pagereqruision.products;
-    // let foundsupll = {};
-    console.log("send btn clicked");
+
+    //set status to approved
     db.collection("requisitions")
       .doc(this.state.documntId)
       .update({
@@ -148,11 +138,12 @@ export default class EditPrManagement extends Component {
       .then(function () {
         console.log("Document successfully updated!");
 
+        //randomely take suppliers
         let supplierstocalled =
           Math.floor(Math.random() * selectedsup.length) + 1;
 
         console.log(supplierstocalled);
-
+        //dynamically sey places
         let places = [
           "Malabe",
           "Kolonnawa",
@@ -217,30 +208,13 @@ export default class EditPrManagement extends Component {
           }
           suppliProdct.push({ supplierName: supliname, products: myprodts });
         }
-        // console.log(
-        //   "these are the produts " +
-        //     suppliProdct[0].supplierName +
-        //     " and " +
-        //     suppliProdct[0].products[0].itemname
-        // );
-        // console.log(suppliProdct[0].products);
-
-        // for (var h = 0; h < suppliProdct.length; h++) {
-        //   db.collection("suporderrss")
-        //     .doc(rrnumber)
-        //     .collection("suppliers")
-        //     .doc(suppliProdct[h].supplierName)
-        //     .set({
-        //       products: suppliProdct[h].products,
-        //     });
-        //}
 
         for (var h = 0; h < suppliProdct.length; h++) {
           var yy = rrnumber;
           var suppname = suppliProdct[h].supplierName;
           console.log("req num is" + yy);
           console.log("supplier name is" + suppliProdct[h].supplierName);
-          // console.log("products" + suppliProdct[h].products);
+
           db.collection("suporderrss").doc(yy).set({ name: "fbghh" });
 
           db.collection("suporderrss")
@@ -346,6 +320,7 @@ export default class EditPrManagement extends Component {
                     <div className="form-group">
                       <label>Select Suppliers </label>
                       <select
+                        id="addsupplierstolist"
                         required
                         className="form-control"
                         value={this.state.suppliername}
@@ -432,6 +407,7 @@ export default class EditPrManagement extends Component {
         <div className="row mb-4">
           <div className="col-md-2 offset-md-10 custombbtn offset-sm-0">
             <button
+              id="sendButtonn"
               type="button"
               class="btn btn-labeled btn-success p-2 "
               onClick={this.sendbutton}

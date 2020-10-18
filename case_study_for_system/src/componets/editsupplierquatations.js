@@ -7,10 +7,11 @@ export default class EditsupplierQuatations extends Component {
     supllierwiseproducts: [],
   };
 
+  //load all orders
   loadsupllierfororder = () => {
     var jj = this.props.match.params;
     let ddodc = "";
-    console.log("------------------------------------------------ " + jj.id);
+
     db.collection("suporderrss")
       .doc(jj.id)
       .collection("suppliers")
@@ -18,16 +19,14 @@ export default class EditsupplierQuatations extends Component {
       .then(snapshot => {
         const orderr = [];
         snapshot.forEach(doc => {
-          // console.log(doc.id, " " + jj.id + " => ", doc.data());
-
           ddodc = doc.id;
 
           const data = doc.data();
           data.supnameid = ddodc;
           data.reqidd = jj.id;
-          orderr.push(data);
+          orderr.push(data); //push all data to arry
         });
-        //console.log("I am here " + orderr);
+
         this.setState({ supllierwiseproducts: orderr }, function () {
           console.log(this.state.supllierwiseproducts);
         });

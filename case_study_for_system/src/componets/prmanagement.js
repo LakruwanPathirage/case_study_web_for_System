@@ -6,7 +6,7 @@ export default class PrManagementAndQuatations extends Component {
     requisitions: null,
     number: 1,
   };
-
+  //when user click the ammend button set status to rejected
   Ammendbttonpress = dddid => {
     let loddfun = this.Loaddata;
     db.collection("requisitions")
@@ -16,9 +16,6 @@ export default class PrManagementAndQuatations extends Component {
       })
       .then(function () {
         loddfun();
-        console.log("---------------------------------");
-        console.log("Document successfully updated!");
-        console.log("---------------------------------");
       });
 
     console.log("ammend btn pressed haaaaai");
@@ -27,7 +24,7 @@ export default class PrManagementAndQuatations extends Component {
   prTbleRRow = () => {
     let ammbfun = this.Ammendbttonpress;
     return this.state.requisitions.map(function (object, i) {
-      return <PrTableRow obj={object} key={i} Ammendbttonpress={ammbfun} />;
+      return <PrTableRow obj={object} key={i} Ammendbttonpress={ammbfun} />; //send props to next component
     });
   };
   Loaddata = () => {
@@ -45,14 +42,14 @@ export default class PrManagementAndQuatations extends Component {
           data.doocid = ddodc;
           requisitions.push(data);
         });
-        // console.log("I am here " + requisitions[1].doocid);
+
         this.setState({ requisitions: requisitions });
         console.log(requisitions);
       })
       .catch(error => console.log(error));
   };
 
-  //citiesRef.where("capital", "!=", false);
+  //first load all data
   componentDidMount() {
     this.Loaddata();
   }
