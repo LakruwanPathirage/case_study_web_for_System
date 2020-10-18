@@ -252,10 +252,10 @@ export default class EditPrManagement extends Component {
               products: suppliProdct[h].products,
             });
         }
-        // for (var k = 0; k < nproducts.length; k++) {
-        //   db.collection("supplierQuotation").add(nproducts[k]);
-        // }
-        //   accessprops.history.push("/createPrManagementAndQuatations");
+        for (var k = 0; k < nproducts.length; k++) {
+          db.collection("supplierQuotation").add(nproducts[k]);
+        }
+        accessprops.history.push("/createPrManagementAndQuatations");
       });
   };
 
