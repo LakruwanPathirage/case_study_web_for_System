@@ -249,7 +249,7 @@ export default class EditPrManagement extends Component {
             .doc(suppliProdct[h].supplierName)
             .set({
               dummy: "dummy",
-              products: [{ itemname: "vfbb", price: "555", quantity: "5555" }],
+              products: suppliProdct[h].products,
             });
         }
         // for (var k = 0; k < nproducts.length; k++) {
